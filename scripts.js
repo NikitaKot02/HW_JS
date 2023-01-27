@@ -65,7 +65,7 @@ console.log(SPryam + ' см2');
 // Задание 4
 
 let H = 10,
-    VCilindra = 3.14 * d / 2 * d / 2 * H;
+    VCilindra = 3.14 * a7 / 2 * a7 / 2 * H;
 console.log(VCilindra + ' м3');
 
 // Задание 5
