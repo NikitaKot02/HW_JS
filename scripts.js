@@ -57,9 +57,9 @@ console.log(a18, typeof a18);
 
 // Задание 3
 
-let h = 23,
-    c = 10,
-    SPryam = c * h;
+let h1 = 23,
+    c1 = 10,
+    SPryam = c1 * h1;
 console.log(SPryam + ' см2');
 
 // Задание 4
@@ -76,10 +76,10 @@ console.log(SKruga + ' cм2');
 
 // Задание 6
 
-let a = 5,
-    b = 7,
+let aTr = 5,
+    bTr = 7,
     hTr = 10,
-    STrap = (a + b)/2 * hTr;
+    STrap = (aTr + bTr)/2 * hTr;
 console.log(STrap + ' см2');
 
 // Задание 7
