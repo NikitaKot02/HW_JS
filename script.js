@@ -1,212 +1,95 @@
-let html = document.querySelector('html');
-html.setAttribute('lang', 'en');
+function toDo(selector){
+    let containerToDo = document.querySelector(selector);
+    if (!containerToDo) return;
 
-let metaUtf8 = document.createElement('meta');
-metaUtf8.setAttribute('charset', 'UTF-8');
+    let formToDo = containerToDo.querySelector(`${selector}__form`);
+    if (!formToDo) return;
 
-let title = document.createElement('title');
-title.innerHTML = 'Call to Action';
+    let input = formToDo.querySelector('input');
+    if (!input) return;
 
-document.head.insertBefore(metaUtf8, document.querySelector('script'));
-document.head.insertBefore(title, document.querySelector('script'));
+    let toDoList = containerToDo.querySelector(`${selector}__list`);
+    if (!toDoList) return;
 
-let container = document.createElement('div');
-container.classList.add('container');
-document.body.appendChild(container);
+    let clearToDo = containerToDo.querySelector('.clear');
+    if (!clearToDo) return;
 
-let title_block = document.createElement('div');
-title_block.classList.add('title_block');
-container.appendChild(title_block);
+    clearToDo.addEventListener('click', () => {
+        toDoList.innerHTML = '';
+    });
 
-let title_3 = document.createElement('h3');
-title_3.innerHTML = 'Choose Your Option';
-title_3.classList.add('title_3');
-title_block.appendChild(title_3);
+    formToDo.addEventListener('submit', function(event){
+        event.preventDefault();
+        console.log(event);
+        if (!input.value) return;
+        toDoList.append(createItem(input.value));
+        input.value = '';
+    });
 
-let text = document.createElement('p');
-text.innerHTML = 'But I must explain to you how all this mistaken idea of denouncing';
-text.classList.add('text');
-title_block.appendChild(text);
+    toDoList.addEventListener('click', event => {
+        let target = event.target;
 
-let cards = document.createElement('div');
-cards.classList.add('cards');
-container.appendChild(cards);
+        if (target.tagName !== 'SPAN') return;
+ 
+        target.classList.toggle('done');
 
-let card = document.createElement('div');
-card.classList.add('card');
-cards.appendChild(card);
+        let check = target.previousElementSibling;
 
-let title_2 = document.createElement('h2');
-title_2.innerHTML = 'FREELANCER';
-title_2.classList.add('title_2');
-card.appendChild(title_2);
+        check.checked = target.classList.contains('done');
 
-let title_3_2 = document.createElement('h3');
-title_3_2.innerHTML = 'Initially designed to';
-title_3_2.classList.add('title_3');
-card.appendChild(title_3_2);
+        // if (target.classList.contains('done')){
+        //     check.checked = true;
+        // }else{
+        //     check.checked = false;
+        // }
+        
+    });
 
-let textClone = text.cloneNode(true);
-card.appendChild(textClone);
+    const createItem = (toDoText) => {
+        let item = document.createElement('li');
+        item.classList.add('item');
 
-let button = document.createElement('div');
-button.innerHTML = 'START HERE';
-button.classList.add('button');
-card.appendChild(button);
+        let check = document.createElement('input');
+        check.setAttribute('type', 'checkbox');
 
-let cardClone = card.cloneNode(true);
-cards.appendChild(cardClone);
+        let text = document.createElement('span');
+        text.classList.add('text');
+        text.innerText = toDoText;
 
-let card_2_title = cardClone.querySelector('.title_2');
-card_2_title.innerHTML = 'STUDIO';
-card_2_title.classList.add('card_2_title');
+        let buttons = document.createElement('div');
+        buttons.classList.add('item__buttons');
 
-let card_2_text = cardClone.querySelector('.text');
-card_2_text.classList.add('card_2_text');
+        let del = document.createElement('div');
+        del.classList.add('item__button');
+        del.classList.add('del');
+        del.innerHTML = '&#128465;';
 
-let button_2 = cardClone.querySelector('.button');
-button_2.classList.add('button_2');
+        let edit = document.createElement('div');
+        edit.classList.add('item__button');
+        edit.classList.add('edit');
+        edit.innerHTML = '&#9998;';
 
+        del.addEventListener('click', () => {
+            item.remove();
+        });
 
-let style = document.createElement('style');
-style.innerHTML = `
-    @import url('https://fonts.googleapis.com/css2?family=Arvo&family=Montserrat:wght@700&family=Open+Sans&display=swap');
+        edit.addEventListener('click', function(e){
+            text.contentEditable = true;
+            text.focus();
+            // edit.removeEventListener(e.type, arguments.callee) // --> Удаление анонимного обработчика событий
+        });
 
-    *{
-        margin: 0;
-        padding: 0;
+        text.addEventListener('keydown', event => {
+            if (event.altKey && event.code === 'Enter'){
+                text.contentEditable = false;
+            }
+        });
+
+        buttons.append(del, edit);
+        item.append(check, text, buttons);
+
+        return item;
     }
+}
 
-    body{
-        background: #fff;
-        font-family: 'Open Sans';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 26px;
-        color: #9FA3A7;
-    }
-
-    .title_2{
-        color: #9FA3A7;
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 12px;
-        line-height: 15px;
-        letter-spacing: 2.4px;
-        margin-top: 82px;
-        margin-bottom: 19px;
-    }
-
-    .title_3{
-        font-family: 'Arvo';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 36px;
-        line-height: 48px;
-        color: #212121;
-    }
-
-    .container{
-        max-width: 800px;
-        width: 100%;
-        margin: 0 auto;
-        padding-top: 122px;
-        padding-bottom: 139px;
-
-    }
-
-    .title_block{
-        max-width: 464px;
-        width: 100%;
-        margin: 0 auto;
-        margin-bottom: 55px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .title_block .title_3{
-        margin-bottom: 10px;
-    }
-
-    .cards{
-        display: flex;
-    }
-
-    .card{
-        max-width: 400px;
-        width: 100%;
-        height: 479px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .card:first-child{
-        border: 1px solid #E8E9ED;
-        border-right: 0;
-        border-radius: 2.7px 0 0 2.7px;
-
-    }
-
-    .card:last-child{
-        background: #8F75BE;
-        border: 1px solid transparent;
-        border-radius: 0 2.7px 2.7px 0;
-    }
-
-    .card_2_title{
-        color: #FFC80A;
-    }
-
-    .card .title_3{
-        line-height: 46px;
-        max-width: 210px;
-        text-align: center;
-        margin-bottom: 25px;
-    }
-
-    .card .text{
-        font-size: 12px;
-        line-height: 22px;
-        max-width: 210px;
-        text-align: center;
-        margin-bottom: 64.5px;
-    }
-
-    .card_2_text{
-        color: #fff;
-    }
-
-    .button{
-        max-width: 147px;
-        width: 100%;
-        height: 46px;
-        border: 3px solid #FFC80A;
-        border-radius: 50px;
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 12px;
-        line-height: 15px;
-        color: #212121;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: .4s;
-    }
-
-    .button:hover{
-        background: #FFC80A;
-        opacity: .7;
-    }
-
-    .button_2{
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        color: #fff;
-    }
-`;
-
-document.head.appendChild(style);
+toDo('.container');
