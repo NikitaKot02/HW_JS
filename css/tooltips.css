@@ -1,0 +1,35 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    max-width: 1200px;
+    margin: 0 auto;
+    color: #065c0b;
+}
+
+.container p{
+    text-align: center;
+    font-size: 20px;
+}
+
+.tool-tip{
+    border-bottom: 1px solid #000;
+    background: #cccc8e57;
+    position: relative;
+}
+
+.tool-tip-element{
+    position: absolute;
+    padding: 5px;
+    border-radius: 3px;
+    max-width: 350px;
+    width: max-content;
+    background: #fff;
+    border: 1px solid #000;
+    margin-top: 1px;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
